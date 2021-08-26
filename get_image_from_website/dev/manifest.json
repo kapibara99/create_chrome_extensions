@@ -9,9 +9,6 @@
   },
 
   "permissions": [
-    "tabs",
-    "debugger",
-    "background",
     "http://*/*/",
     "https://*/*/"
   ],
