@@ -1,0 +1,26 @@
+{
+  "name": "Image Downloader",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "description": "Oops, this is a beta version. This allows you to download a batch zip of images from a web page's documentation and css.",
+
+  "browser_action":{
+    "default_popup":"index.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "debugger",
+    "background",
+    "http://*/*/",
+    "https://*/*/"
+  ],
+
+  "content_scripts": [
+    {
+      "js": ["content_script.js","jszip.js"],
+      "run_at": "document_end",
+      "matches": ["https://*/*","http://*/*"]
+    }
+  ]
+}
