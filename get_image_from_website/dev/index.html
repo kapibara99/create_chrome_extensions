@@ -9,27 +9,36 @@
 </head>
 <body>
   <!-- manual input area -->
-  <!-- <form action="">
-    <label for="text-01">
-      <input name="text-01" type="text"></input>
-    </label>
-    <label for="text-01">
-      <input name="text-01" type="text"></input>
-    </label>
-    <label for="text-01">
-      <input name="text-01" type="text"></input>
-    </label>
-    <label for="text-01">
-      <input name="text-01" type="text"></input>
-    </label>
-    <label for="text-01">
-      <input name="text-01" type="text"></input>
-    </label>
-    <button type="submit"></button>
-  </form> -->
+  <p>This extension monitors the values of the following attributes. If you have other attributes in mind that you would like to add, please add their names in the text box.</p>
+  <ul class="default-list">
+    <li class="default-list__item">src</li>
+    <li class="default-list__item">srcset</li>
+    <li class="default-list__item">data-src</li>
+    <li class="default-list__item">data-srcset</li>
+  </ul>
+  <form class="form" action="" id="js-form">
+    <div class="form-inner" id="js-form-inner">
+      <label for="text-1">
+        <input class="js-input" id="text-1" type="text"></input>
+      </label>
+      <label for="text-2">
+        <input class="js-input" id="text-2" type="text"></input>
+      </label>
+      <label for="text-3">
+        <input class="js-input" id="text-3" type="text"></input>
+      </label>
+      <label for="text-4">
+        <input class="js-input" id="text-4" type="text"></input>
+      </label>
+      <label for="text-5">
+        <input class="js-input" id="text-5" type="text"></input>
+      </label>
+    </div>
+    <button class="btn" type="button" id="js-more-label">more text box</button>
+  </form>
   <!-- btn area -->
   <!--  -->
-  <button class="btn" id="js-btn">get image from this page !</button>
+  <button class="btn" type="button" id="js-btn">get image from this page !</button>
   <script src="inhtml.js"></script>
 </body>
 </html>

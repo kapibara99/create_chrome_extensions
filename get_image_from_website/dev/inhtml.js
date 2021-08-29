@@ -1,33 +1,32 @@
 //dev
-var testResult;
+let testResult;
 
 
 // get html
 // utilize
-var c = chrome;
-var ws = c.windows;
-var tbs = c.tabs;
+const tbs = chrome.windows.tabs;
+let manualInputAry = [];
+let defaultLength = 5;
 
-document.getElementById('js-btn').addEventListener("click",function(e){
+document.getElementById('js-more-label').addEventListener("click",(e)=>{
+  defaultLength += 1;
+  const label = document.createElement("label");
+  label.setAttribute("for",`text-${defaultLength}`);
+  label.innerHTML = `<input class="js-input" id="text-${defaultLength}" type="text"></input>`;
+  document.getElementById('js-form-inner').appendChild(label);
+  return defaultLength;
+})
+
+document.getElementById('js-btn').addEventListener("click",(e)=>{
+  const INPUT_ELEs = [].slice.call(document.querySelectorAll('.js-input'));
+  INPUT_ELEs.forEach(ele => {
+    if(ele.value && ele.value !== ""){
+      manualInputAry.push(ele.value);
+    }
+  });
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {
-      mes:"testだよ"
+      inputAry:manualInputAry
     });
   });
-  // setTextAreaUrlAndTitle();
 });
-function setTextAreaUrlAndTitle() {
-
-  try {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      console.log("t");
-      // since only one tab should be active and in the current window at once
-      // the return variable should only have one entry
-      var activeTab = tabs[0];
-      var activeTabId = activeTab.id; // or do whatever you need
-      console.log(activeTabId.url);
-   });
-  } catch (e) {
-    console.log(e);
-  }
-}

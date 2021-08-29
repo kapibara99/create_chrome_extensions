@@ -6,13 +6,41 @@
 body{
   width: 400px;
   position: relative;
-  padding: 20px 0px;
+  padding: 20px;
+  line-height: 1.4;
 }
 button{
   outline: none;
   border: none;
-  background: none;
+  background: #fff;
   cursor: pointer;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+  font-size: 24px;
+  padding: 8px 20px;
+  display: block;
+  margin:30px auto;
+}
+.default-list{
+  margin: 10px auto 40px;
+  width: 100%;
+}
+.default-list__item{
+  list-style: none;
+  padding-left: 2em;
+  font-weight: bold;
+  position: relative;
+}
+.default-list__item::before{
+  content: "\030fb";
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translateY(-50%);
+}
+.default-list__item:not(:last-of-type){
+  margin-bottom: 0.3em;
 }
 .btn{
   border: 1px solid #6AA3A4;
@@ -27,4 +55,22 @@ button{
 .btn:hover{
   background-color: #6AA3A4;
   color: #fff;
+}
+
+.form{
+  width: 100%;
+  margin-bottom: 40px;
+}
+.form-inner{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px auto 60px;
+}
+.form-inner label{
+  width: 45%;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
 }
