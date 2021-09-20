@@ -11,11 +11,7 @@ if (PASS_NAME === "/") {
 
 // func init
 chrome.runtime.onMessage.addListener(function (msg) {
-  console.log("start");
-  let result = [];
-
-  result = initer(msg.inputAry);
-  console.log(result);
+  let result = initer(msg.inputAry);
   addImageDownloadButton(result);
 });
 
@@ -54,7 +50,7 @@ function addImageDownloadButton(imgList) {
         xhr.responseType = "blob";
         xhr.onload = function () {
           // return data
-          const fileName = src.slice(src.lastIndexOf("/") + 1);
+          const fileName = src.replace(BASE_DOMAIN,"");
           resolve({
             data: this.response,
             fileName: fileName
@@ -73,7 +69,7 @@ function addImageDownloadButton(imgList) {
       })
     );
 
-    //
+    // get image promise obj
     const images = await Promise.all(imagePromises);
     generateImagesZip(images);
   }
@@ -86,7 +82,7 @@ function addImageDownloadButton(imgList) {
     let folder = zip.folder(folderName);
     images.forEach(image => {
       if (image.data && image.fileName) {
-        folder.file(image.fileName, image.data)
+        folder.file(image.fileName, image.data);
       }
     });
     zip.generateAsync({
@@ -146,7 +142,8 @@ function initer(inputAry) {
           (tester.match(/.jpg/)) ||
           (tester.match(/.svg/)) ||
           (tester.match(/.webp/)) ||
-          (tester.match(/.gif/))
+          (tester.match(/.gif/)) &&
+          !(tester.match(/data:image/))
         )) {
         return true;
       } else {
@@ -182,7 +179,5 @@ function initer(inputAry) {
     }
     return r;
   }
-
   return r;
 }
-console.log("script is loaded");
