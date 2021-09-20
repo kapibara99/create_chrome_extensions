@@ -136,19 +136,20 @@ function initer(inputAry) {
     });
 
     function verifImageFormat(tester) {
-      if (
+      if (// || or
         (tester.match(/.png/) ||
           (tester.match(/.jepg/)) ||
           (tester.match(/.jpg/)) ||
           (tester.match(/.svg/)) ||
           (tester.match(/.webp/)) ||
-          (tester.match(/.gif/)) &&
-          !(tester.match(/data:image/))
+          (tester.match(/.gif/))
         )) {
-        return true;
-      } else {
-        return false;
-      }
+          if(//&& and
+            (tester.indexOf("data:image\/") == -1)
+          ){
+            return true;
+          }else{return false}
+      } else {return false;}
     }
 
     function setHTTPImgPath(originPath) {

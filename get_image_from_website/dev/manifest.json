@@ -1,11 +1,16 @@
 {
-  "name": "Image Downloader",
-  "version": "0.1.0",
+  "name": "get the image!",
+  "version": "1.0.0",
   "manifest_version": 2,
-  "description": "Oops, this is a beta version. This allows you to download a batch zip of images from a web page's documentation and css.",
+  "description": "This allows you to download a batch zip of images from a web page's documentation and css.",
 
   "browser_action":{
     "default_popup":"index.html"
+  },
+  "icons":{
+    "16":"img/240770894_197005722494949_3678857227278718278_n.png",
+    "48":"img/240770894_197005722494949_3678857227278718278_n.png",
+    "128":"img/240770894_197005722494949_3678857227278718278_n.png"
   },
 
   "permissions": [
