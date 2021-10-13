@@ -1,6 +1,6 @@
 {
   "name": "get the image!",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manifest_version": 2,
   "description": "This allows you to download a batch zip of images from a web page's documentation and css.",
 

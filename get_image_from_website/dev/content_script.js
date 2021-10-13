@@ -112,8 +112,11 @@ function initer(inputAry) {
 
   function getImageSrc(inputAry) {
     const doclist = [].slice.call(document.querySelectorAll('*'));
+    const afterlist = [].slice.call(document.querySelectorAll('*::after'));
+    const beforelist = [].slice.call(document.querySelectorAll('*::before'));
+    const researchList = doclist.concat(afterlist).concat(beforelist);
     let r = [];
-    doclist.forEach(element => {
+    researchList.forEach(element => {
       const style = window.getComputedStyle(element);
       const imgPathObj_forCss = ["background-image", "content"];
 
