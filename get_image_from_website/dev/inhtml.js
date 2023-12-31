@@ -3,7 +3,7 @@ let testResult;
 
 // get html
 // utilize
-const tbs = chrome.windows.tabs;
+// const tbs = chrome.windows.tabs;
 let manualInputAry = [];
 let defaultLength = 5;
 

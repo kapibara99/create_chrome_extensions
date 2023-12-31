@@ -106,9 +106,15 @@ function addImageDownloadButton(imgList) {
         document.body.insertAdjacentElement("beforeEnd", dlLink);
         dlLink.click();
         dlLink.remove();
-        setTimeout(function () {
+        async function startAlarm(name, duration) {
+          await chrome.alarms.create(name, { delayInMinutes: 0.2 });
+        }
+
+        chrome.alarms.onAlarm.addListener(() => {
           window.URL.revokeObjectURL(dataUrl);
-        }, 1000);
+        });
+        // setTimeout(function () {
+        // }, 1000);
       });
   }
 }
