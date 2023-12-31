@@ -1,12 +1,12 @@
 "use strict";
-const BASE_DOMAIN = window.location.protocol + '//' + window.location.host;
-let THIS_FILE_NAME = window.location.href.split('/').pop();
+const BASE_DOMAIN = window.location.protocol + "//" + window.location.host;
+let THIS_FILE_NAME = window.location.href.split("/").pop();
 let PASS_NAME = window.location.pathname;
 if (!THIS_FILE_NAME == "") {
   PASS_NAME = PASS_NAME - THIS_FILE_NAME;
 }
 if (PASS_NAME === "/") {
-  PASS_NAME = ""
+  PASS_NAME = "";
 }
 
 // func init
@@ -38,35 +38,41 @@ function addImageDownloadButton(imgList) {
     margin:30px auto;
     ">Let's download!</button>`
   );
-  document.getElementById("js-download-image-zip-from-kapy").addEventListener("click", () => {
-    downloadImages(imgList);
-  });
+  document
+    .getElementById("js-download-image-zip-from-kapy")
+    .addEventListener("click", () => {
+      downloadImages(imgList);
+    });
   // downloader
   async function downloadImages(srcList) {
     const imagePromises = srcList.map(
-      (src) => new Promise((resolve) => {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', src, true);
-        xhr.responseType = "blob";
-        xhr.onload = function () {
-          // return data
-          const fileName = src.replace(BASE_DOMAIN,"");
-          resolve({
-            data: this.response,
-            fileName: fileName
-          });
-        };
-        xhr.onerror = () => resolve({
-          data: null
-        });
-        xhr.onabort = () => resolve({
-          data: null
-        });
-        xhr.ontimeout = () => resolve({
-          data: null
-        });
-        xhr.send();
-      })
+      (src) =>
+        new Promise((resolve) => {
+          let xhr = new XMLHttpRequest();
+          xhr.open("GET", src, true);
+          xhr.responseType = "blob";
+          xhr.onload = function () {
+            // return data
+            const fileName = src.replace(BASE_DOMAIN, "");
+            resolve({
+              data: this.response,
+              fileName: fileName,
+            });
+          };
+          xhr.onerror = () =>
+            resolve({
+              data: null,
+            });
+          xhr.onabort = () =>
+            resolve({
+              data: null,
+            });
+          xhr.ontimeout = () =>
+            resolve({
+              data: null,
+            });
+          xhr.send();
+        })
     );
 
     // get image promise obj
@@ -80,29 +86,30 @@ function addImageDownloadButton(imgList) {
     // create data folder
     const folderName = "getImage";
     let folder = zip.folder(folderName);
-    images.forEach(image => {
+    images.forEach((image) => {
       if (image.data && image.fileName) {
         folder.file(image.fileName, image.data);
       }
     });
-    zip.generateAsync({
-      type: "blob"
-    }).then(blob => {
+    zip
+      .generateAsync({
+        type: "blob",
+      })
+      .then((blob) => {
+        // create download link
+        let dlLink = document.createElement("a");
+        const dataUrl = URL.createObjectURL(blob);
+        dlLink.href = dataUrl;
+        dlLink.download = `${folderName}.zip`;
 
-      // create download link
-      let dlLink = document.createElement("a");
-      const dataUrl = URL.createObjectURL(blob);
-      dlLink.href = dataUrl;
-      dlLink.download = `${folderName}.zip`;
-
-      // init and remove
-      document.body.insertAdjacentElement("beforeEnd", dlLink);
-      dlLink.click();
-      dlLink.remove();
-      setTimeout(function () {
-        window.URL.revokeObjectURL(dataUrl);
-      }, 1000);
-    });
+        // init and remove
+        document.body.insertAdjacentElement("beforeEnd", dlLink);
+        dlLink.click();
+        dlLink.remove();
+        setTimeout(function () {
+          window.URL.revokeObjectURL(dataUrl);
+        }, 1000);
+      });
   }
 }
 
@@ -111,16 +118,16 @@ function initer(inputAry) {
   r = [...new Set(r)];
 
   function getImageSrc(inputAry) {
-    const doclist = [].slice.call(document.querySelectorAll('*'));
-    const afterlist = [].slice.call(document.querySelectorAll('*::after'));
-    const beforelist = [].slice.call(document.querySelectorAll('*::before'));
+    const doclist = [].slice.call(document.querySelectorAll("*"));
+    const afterlist = [].slice.call(document.querySelectorAll("*::after"));
+    const beforelist = [].slice.call(document.querySelectorAll("*::before"));
     const researchList = doclist.concat(afterlist).concat(beforelist);
     let r = [];
-    researchList.forEach(element => {
+    researchList.forEach((element) => {
       const style = window.getComputedStyle(element);
       const imgPathObj_forCss = ["background-image", "content"];
 
-      imgPathObj_forCss.forEach(tag => {
+      imgPathObj_forCss.forEach((tag) => {
         const targetStyle = String(style.getPropertyValue(tag));
         if (targetStyle.match(/url/) && verifImageFormat(targetStyle)) {
           const v = setHTTPImgPath(targetStyle);
@@ -128,31 +135,40 @@ function initer(inputAry) {
         }
       });
 
-      const imgPathObj_forHtml = [...["src", "srcset", "data-src", "data-srcset"],...inputAry];
-      imgPathObj_forHtml.forEach(tag => {
+      const imgPathObj_forHtml = [
+        ...["src", "srcset", "data-src", "data-srcset"],
+        ...inputAry,
+      ];
+      imgPathObj_forHtml.forEach((tag) => {
         const value = String(element.getAttribute(tag));
         if (verifImageFormat(value)) {
           const v = setHTTPImgPath(value);
           r.push(v);
         }
-      })
+      });
     });
 
     function verifImageFormat(tester) {
-      if (// || or
-        (tester.match(/.png/) ||
-          (tester.match(/.jepg/)) ||
-          (tester.match(/.jpg/)) ||
-          (tester.match(/.svg/)) ||
-          (tester.match(/.webp/)) ||
-          (tester.match(/.gif/))
-        )) {
-          if(//&& and
-            (tester.indexOf("data:image\/") == -1)
-          ){
-            return true;
-          }else{return false}
-      } else {return false;}
+      if (
+        // || or
+        tester.match(/.png/) ||
+        tester.match(/.jepg/) ||
+        tester.match(/.jpg/) ||
+        tester.match(/.svg/) ||
+        tester.match(/.webp/) ||
+        tester.match(/.gif/)
+      ) {
+        if (
+          //&& and
+          tester.indexOf("data:image/") == -1
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
 
     function setHTTPImgPath(originPath) {
@@ -161,21 +177,26 @@ function initer(inputAry) {
       const regRelative = /[./a-zA-Z][a-zA-Z0-9_\.\/\-]+/g;
 
       let m;
-      if (originPath.match(/http/)) { //http
+      if (originPath.match(/http/)) {
+        //http
         m = regHTTP.exec(originPath);
         if (Array.isArray(m)) {
           m = String(m[0]);
         }
       } else {
         const first = originPath.slice(0, 1);
-        if (first === "/") { // first str is /
+        if (first === "/") {
+          // first str is /
           m = BASE_DOMAIN + regAbsolute.exec(originPath);
-        } else if (first === ".") { // first str is ./
+        } else if (first === ".") {
+          // first str is ./
           m = regRelative.exec(originPath).slice(2);
           m = BASE_DOMAIN + PASS_NAME + "/" + m;
-        } else if (first.match(/[a-zA-Z0-9]/)) { // first str is xxxx/
+        } else if (first.match(/[a-zA-Z0-9]/)) {
+          // first str is xxxx/
           m = BASE_DOMAIN + PASS_NAME + "/" + originPath;
-        } else { // else is err
+        } else {
+          // else is err
           console.error("fix path failed", originPath);
         }
       }
